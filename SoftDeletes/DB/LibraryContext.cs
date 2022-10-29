@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
 using Pomelo.EntityFrameworkCore;
 namespace SoftDeletes.DB;
 
@@ -14,9 +13,13 @@ public class LibraryContext : DbContext
 
     public DbSet<Publisher> Publisher { get; set; }
 
+    protected readonly IConfiguration Configuration;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySql("server=84.192.29.108;database=test;user=admin;password=Klp-246135");
+        optionsBuilder.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(Configuration.GetConnectionString("Default")))
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
