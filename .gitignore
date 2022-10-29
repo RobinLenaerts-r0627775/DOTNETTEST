@@ -444,6 +444,9 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
+# sensitive information files
+appsettings.json
+
 ##
 ## Visual Studio Code
 ##
