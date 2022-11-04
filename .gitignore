@@ -455,3 +455,6 @@ appsettings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/SoftDeletes/appsettings.json
+/SoftDeletes/appsettings.Development.json
+/Soft Deletes 2/appsettings.Development.json

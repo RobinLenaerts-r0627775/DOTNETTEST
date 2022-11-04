@@ -7,13 +7,20 @@ using Microsoft.Extensions.Configuration;
 using Pomelo.EntityFrameworkCore;
 namespace SoftDeletes.DB;
 
-public class LibraryContext : DbContext
+public class LibraryContext : EasiDbContext
 {
     public DbSet<Book> Book { get; set; }
 
     public DbSet<Publisher> Publisher { get; set; }
 
     protected readonly IConfiguration Configuration;
+
+    public LibraryContext(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+    
+    public LibraryContext() { } 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -31,6 +38,8 @@ public class LibraryContext : DbContext
         entity.HasKey(e => e.ID);
         entity.Property(e => e.Name).IsRequired();
         });
+
+        modelBuilder.Entity<Publisher>().HasQueryFilter(p => !p.IsDeleted);
 
         modelBuilder.Entity<Book>(entity =>
         {
